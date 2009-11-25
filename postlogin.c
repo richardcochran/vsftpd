@@ -4,6 +4,7 @@
  * Author: Chris Evans
  * postlogin.c
  */
+#include <errno.h>
 
 #include "postlogin.h"
 #include "session.h"
@@ -1139,7 +1140,7 @@ handle_mkd(struct vsf_session* p_sess)
   retval = str_mkdir(&p_sess->ftp_arg_str, 0777);
   if (retval != 0)
   {
-    vsf_cmdio_write(p_sess, FTP_FILEFAIL,
+    vsf_cmdio_write(p_sess, EEXIST == errno ? 521 : FTP_FILEFAIL,
                     "Create directory operation failed.");
     return;
   }
