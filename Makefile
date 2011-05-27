@@ -5,7 +5,11 @@ IFLAGS  = -idirafter dummyinc
 #CFLAGS = -g
 CFLAGS	=	-O2 -Wall -W -Wshadow #-pedantic -Werror -Wconversion
 
+ifeq ($(CROSS_COMPILE),)
+LIBS	=	`./vsf_findlibs.sh`
+else
 LIBS	=	-lcrypt -lnsl
+endif
 LINK	=
 
 OBJS	=	main.o utility.o prelogin.o ftpcmdio.o postlogin.o privsock.o \
